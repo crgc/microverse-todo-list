@@ -1,3 +1,15 @@
+.pending {
+  color: #c0392b;
+}
+
+.completed {
+  color: #27ae60;
+}
+
 body {
   background-color: bisque;
+}
+
+.task {
+  margin-bottom: 0.5rem;
 }
