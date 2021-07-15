@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
  module.exports = {
   mode: 'development',
@@ -13,6 +14,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
     new HtmlWebpackPlugin({
       template: './src/index.html'
     }),
+    new CopyWebpackPlugin({ 
+      patterns: [ 
+       { from: './src/favicon.ico' },
+      ]
+   }),
   ],
    output: {
      filename: '[name].bundle.js',

@@ -2,14 +2,23 @@ import _ from 'lodash';
 import './style.css';
 
 const createDiv = () => document.createElement('div');
-const createTaskDiv = (task) => {
-  const taskDiv = createDiv();
 
-  taskDiv.textContent = task.description;
-  taskDiv.className = `task ${task.completed ? 'completed' : 'pending'}`;
+function buildTaskElement(task) {
+  const taskElement = createDiv();
+  taskElement.className = 'todo-list-task';
+  taskElement.textContent = task.description;
 
-  return taskDiv;
-};
+  return taskElement;
+}
+
+function updateDOM(todoListElement) {
+  const mainTagElement = document.getElementsByTagName('main')[0];
+  const todoListWrapperElement = document.getElementsByClassName('todo-list-wrapper')[0];
+
+  todoListWrapperElement.prepend(todoListElement);
+  mainTagElement.appendChild(todoListWrapperElement);
+  document.body.appendChild(mainTagElement);
+}
 
 function loadTasks() {
   let tasks = [
@@ -22,12 +31,12 @@ function loadTasks() {
 
   const todoListElement = document.getElementById('todo-list');
   tasks.forEach((task) => {
-    const taskDiv = createTaskDiv(task);
+    const taskElement = buildTaskElement(task);
 
-    todoListElement.appendChild(taskDiv);
+    todoListElement.appendChild(taskElement);
   });
 
-  document.body.appendChild(todoListElement);
+  updateDOM(todoListElement);
 }
 
 loadTasks();

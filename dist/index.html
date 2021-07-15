@@ -3,9 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webpack Exercise</title>
+    <title>To Do List</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 <script defer src="index.bundle.js"></script></head>
 <body>
-    <h1>Hello webpack!</h1>
+    <main>
+      <div class="todo-list-wrapper">
+        <div id="todo-list">
+          <div class="todo-list-header">
+            <div>Today's To Do</div>
+            <i class="fa fa-refresh" aria-hidden="true"></i>
+          </div>
+          <div class="todo-list-add">
+            <input type="text" name="add-to-list" id="add-to-list" placeholder="Add to your list...">
+            <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+          </div>
+          <!-- <div class="todo-list-task">
+            <div class="todo-list-task-left">
+              <label for="check-task" class="container">
+                <input type="checkbox" name="check-task" id="check-task">
+                <span class="checkmark"></span>
+              </label>
+              <div class="to-do-list-task--description">Wash the dishes</div>
+            </div>
+            <div class="todo-list-task-right">
+              <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+            </div>
+          </div>
+          <div class="todo-list-task">
+            <div class="todo-list-task-left">
+              <label for="check-task" class="container">
+                <input type="checkbox" name="check-task" id="check-task" checked="checked">
+                <span class="checkmark"></span>
+              </label>
+              <div class="to-do-list-task--description strikethrough">Do the laundry</div>
+            </div>
+            <div class="todo-list-task-right">
+              <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+            </div>
+          </div> -->
+        </div>
+        <div class="todo-list-clear-all">
+          <div>Clear all completed</div>
+        </div>
+      </div>
+    </main>
 </body>
 </html>
