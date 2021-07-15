@@ -22,6 +22,24 @@ git clone https://github.com/crgc/microverse-todo-list.git
 ```
 cd microverse-todo-list
 ```
+* Install Webpack
+```
+npm install webpack webpack-cli --save-dev
+```
+* Install dependencies
+```
+npm install --save lodash
+```
+npm install --save-dev style-loader css-loader
+```
+npm install --save-dev html-webpack-plugin
+```
+npm install --save-dev html-webpack-plugin
+```
+npm install --save-dev copy-webpack-plugin
+```
+npm install --save-dev webpack-dev-server
+```
 
 ### Run
 * Build
