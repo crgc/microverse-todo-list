@@ -2,30 +2,30 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
- module.exports = {
+module.exports = {
   mode: 'development',
-   entry: {
-     index: './src/index.js',
-   },
-   devServer: {
+  entry: {
+    index: './src/index.js',
+  },
+  devServer: {
     contentBase: './dist',
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html'
+      template: './src/index.html',
     }),
-    new CopyWebpackPlugin({ 
-      patterns: [ 
-       { from: './src/favicon.ico' },
-      ]
-   }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: './src/favicon.ico' },
+      ],
+    }),
   ],
-   output: {
-     filename: '[name].bundle.js',
-     path: path.resolve(__dirname, 'dist'),
-     clean: true,
-   },
-   module: {
+  output: {
+    filename: '[name].bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+    clean: true,
+  },
+  module: {
     rules: [
       {
         test: /\.css$/i,
@@ -33,4 +33,4 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
       },
     ],
   },
- };
+};
