@@ -2,6 +2,7 @@ import './style.css';
 import { dragStart, dragOver, drop } from './dragandrop.js';
 import { loadTasks, saveTasks, reorderTasks } from './task.js';
 import taskCompleteOrPending from './checkbox.js';
+import { addNewTask } from './crud.js';
 
 const createElement = (name) => document.createElement(name);
 const createElementWithClass = (name, clazz) => {
@@ -82,8 +83,10 @@ function buildTaskElement(task) {
 function updateDOM(todoListElement) {
   const mainTagElement = document.getElementsByTagName('main')[0];
   const todoListWrapperElement = document.getElementsByClassName('todo-list-wrapper')[0];
+  const todoListContainerElement = document.getElementsByClassName('todo-list-container')[0];
 
-  todoListWrapperElement.prepend(todoListElement);
+  todoListContainerElement.appendChild(todoListElement);
+  todoListWrapperElement.prepend(todoListContainerElement);
   mainTagElement.appendChild(todoListWrapperElement);
   document.body.appendChild(mainTagElement);
 }
@@ -98,6 +101,7 @@ function displayTasks() {
   tasks = reorderTasks(tasks, ['index'], ['asc']);
 
   const todoListElement = document.getElementById('todo-list');
+  todoListElement.innerHTML = '';
   tasks.forEach((task) => {
     const taskElement = buildTaskElement(task);
 
@@ -108,4 +112,12 @@ function displayTasks() {
   updateDOM(todoListElement);
 }
 
+function setUpMainListeners() {
+  const addNewTaskElement = document.getElementById('add-new-task');
+  addNewTaskElement.addEventListener('click', () => {
+    addNewTask(displayTasks);
+  });
+}
+
+setUpMainListeners();
 displayTasks();
