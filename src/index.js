@@ -148,11 +148,7 @@ function updateDOM(todoListElement) {
 }
 
 function displayTasks() {
-  let tasks = loadTasks() || [
-    { description: 'Prepare meal', completed: true, index: 3 },
-    { description: 'Do the laundry', completed: false, index: 1 },
-    { description: 'Work on Microverse project', completed: false, index: 2 },
-  ];
+  let tasks = loadTasks() || [];
 
   tasks = reorderTasks(tasks, ['index'], ['asc']);
 
