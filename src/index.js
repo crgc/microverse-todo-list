@@ -2,6 +2,14 @@ import _ from 'lodash'; /* eslint-disable-line */
 import './style.css';
 import { dragStart, dragOver, drop } from './dragandrop';
 
+function loadTasks() {
+  return JSON.parse(localStorage.getItem('tasks'));
+}
+
+function saveTasks(tasks) {
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
 const createElement = (name) => document.createElement(name);
 const createElementWithClass = (name, clazz) => {
   const element = createElement(name);
@@ -32,6 +40,15 @@ const createCheckBoxElement = (task, checkboxId) => {
     } else {
       descriptionElement.classList.remove('strikethrough');
     }
+
+    let tasks = loadTasks();
+    for(let i in tasks) {
+      if(tasks[i].index == taskIndex) {
+        tasks[i].completed = !tasks[i].completed;
+      }
+    }
+
+    saveTasks(tasks);
   });
   return checkboxElement;
 };
@@ -95,14 +112,6 @@ function updateDOM(todoListElement) {
   todoListWrapperElement.prepend(todoListElement);
   mainTagElement.appendChild(todoListWrapperElement);
   document.body.appendChild(mainTagElement);
-}
-
-function loadTasks() {
-  return JSON.parse(localStorage.getItem('tasks'));
-}
-
-function saveTasks(tasks) {
-  localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
 function displayTasks() {
