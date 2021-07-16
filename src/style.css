@@ -147,3 +147,8 @@ i:hover,
   background-color: #f6f6f6;
   color: #898989;
 }
+
+.draggable {
+  cursor: move;
+  user-select: none;
+}
