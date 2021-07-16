@@ -34,6 +34,10 @@ i {
   color: #9b9b9b;
 }
 
+i:hover {
+  color: #636e72;
+}
+
 i:hover,
 .container,
 .container input,
@@ -151,4 +155,12 @@ i:hover,
 .draggable {
   cursor: move;
   user-select: none;
+}
+
+.editable {
+  background-color: #fffcca;
+}
+
+.hidden {
+  display: none;
 }

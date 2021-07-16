@@ -59,10 +59,39 @@ function buildTaskLeftElement(task) {
   return taskLeftElement;
 }
 
-function buildTaskRightElement() {
+function buildTaskRightElement(task) {
   const taskRightElement = createDivWithClass('todo-list-task-right');
-  taskRightElement.innerHTML = '<i class="fa fa-ellipsis-v" aria-hidden="true"></i>';
+  const editElement = createElementWithClass('i', 'fa fa-ellipsis-v');
+  editElement.setAttribute('id', `edit-task-${task.index}`);
+  editElement.setAttribute('aria-hidden', 'true');
+  editElement.addEventListener('click', (e) => {
+    const targetElement = e.target;
+    const parentElement = targetElement.parentElement;
+    const taskElement = parentElement.parentElement;
 
+    const taskIndex = targetElement.id.substring('edit-task-'.length);
+    const deleteElement = document.getElementById(`delete-task-${taskIndex}`);
+
+    taskElement.classList.add('editable');
+    targetElement.classList.add('hidden');
+    deleteElement.classList.remove('hidden');
+  });
+
+  const deleteElement = createElementWithClass('i', 'fa fa-trash hidden');
+  deleteElement.setAttribute('id', `delete-task-${task.index}`);
+  deleteElement.setAttribute('aria-hidden', 'true');
+  deleteElement.addEventListener('click', (e) => {
+    const taskIndex = e.target.id.substring('delete-task-'.length);
+
+    let tasks = loadTasks();
+    tasks = tasks.filter((task) => task.index != taskIndex);
+
+    saveTasks(tasks);
+    displayTasks();
+  });
+
+  taskRightElement.appendChild(editElement);
+  taskRightElement.appendChild(deleteElement);
   return taskRightElement;
 }
 
@@ -71,7 +100,7 @@ function buildTaskElement(task) {
   taskElement.setAttribute('id', `todo-list-task-${task.index}`);
   taskElement.setAttribute('draggable', 'true');
   taskElement.appendChild(buildTaskLeftElement(task));
-  taskElement.appendChild(buildTaskRightElement());
+  taskElement.appendChild(buildTaskRightElement(task));
 
   taskElement.addEventListener('dragstart', dragStart, false);
   taskElement.addEventListener('dragover', dragOver, false);
