@@ -1,6 +1,6 @@
 import './style.css';
-import { dragStart, dragOver, drop } from './dragandrop';
-import { loadTasks, saveTasks, reorderTasks } from './task';
+import { dragStart, dragOver, drop } from './dragandrop.js';
+import { loadTasks, saveTasks, reorderTasks } from './task.js';
 
 const createElement = (name) => document.createElement(name);
 const createElementWithClass = (name, clazz) => {
@@ -17,7 +17,7 @@ const createCheckBoxElement = (task, checkboxId) => {
   checkboxElement.setAttribute('type', 'checkbox');
   checkboxElement.setAttribute('name', `${checkboxId}`);
   checkboxElement.id = `${checkboxId}`;
-  
+
   if (task.completed) {
     checkboxElement.setAttribute('checked', 'checked');
   }
@@ -26,16 +26,16 @@ const createCheckBoxElement = (task, checkboxId) => {
     const checkbox = e.target;
     const taskIndex = checkbox.id.substring('check-task-'.length);
     const descriptionElement = document.getElementById(`todo-list-task-description-${taskIndex}`);
-    
-    if(checkbox.checked) {
+
+    if (checkbox.checked) {
       descriptionElement.classList.add('strikethrough');
     } else {
       descriptionElement.classList.remove('strikethrough');
     }
 
-    let tasks = loadTasks();
-    for(let i in tasks) {
-      if(tasks[i].index == taskIndex) {
+    const tasks = loadTasks();
+    for (const i in tasks) { /* eslint-disable-line no-restricted-syntax */
+      if (tasks[i].index == taskIndex) { /* eslint-disable-line eqeqeq */
         tasks[i].completed = !tasks[i].completed;
       }
     }
@@ -107,7 +107,7 @@ function updateDOM(todoListElement) {
 }
 
 function displayTasks() {
-  let tasks  = loadTasks() || [
+  let tasks = loadTasks() || [
     { description: 'Prepare meal', completed: true, index: 3 },
     { description: 'Do the laundry', completed: false, index: 1 },
     { description: 'Work on Microverse project', completed: false, index: 2 },

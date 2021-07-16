@@ -15,5 +15,5 @@ function reorderTasks(tasks) {
 export {
   loadTasks,
   saveTasks,
-  reorderTasks
-}
+  reorderTasks,
+};

@@ -1,4 +1,4 @@
-import { loadTasks, saveTasks, reorderTasks } from './task';
+import { loadTasks, saveTasks, reorderTasks } from './task.js';
 
 let draggedElement = null;
 function dragStart(e) {
@@ -14,7 +14,7 @@ function dragOver(e) {
 }
 
 function getIndexFromId(id) {
-  return parseInt(id.substring('todo-list-task-'.length));
+  return parseInt(id.substring('todo-list-task-'.length), 10);
 }
 
 function getDescriptionElement(index) {
@@ -29,33 +29,6 @@ function updateCheckBoxElement(checkboxElement, newIndex) {
   checkboxElement.parentElement.setAttribute('for', checkboxId);
 }
 
-function drop(e) {
-   e.preventDefault();
-
-   /* Get data */
-   draggedElement.innerHTML = this.innerHTML;
-   this.innerHTML = e.dataTransfer.getData('text/html');
-   
-   const draggedElementId = draggedElement.id;
-   const overElementId = this.id;
-   const draggedTaskIndex = getIndexFromId(draggedElementId);
-   const overTaskIndex = getIndexFromId(overElementId);
-
-   let draggedDescriptionElement = getDescriptionElement(draggedTaskIndex);
-   let overDescriptionElement = getDescriptionElement(overTaskIndex);
-
-   draggedDescriptionElement.id = `todo-list-task-description-${overTaskIndex}`;
-   overDescriptionElement.id = `todo-list-task-description-${draggedTaskIndex}`;
-
-   let draggedCheckboxElement = document.getElementById(`check-task-${draggedTaskIndex}`);
-   let overCheckboxElement = document.getElementById(`check-task-${overTaskIndex}`);
-
-   updateCheckBoxElement(draggedCheckboxElement, overTaskIndex);
-   updateCheckBoxElement(overCheckboxElement, draggedTaskIndex);
-
-   updateIndeces(draggedTaskIndex, overTaskIndex);
-}
-
 function getPositionFromIndex(index) {
   return index - 1;
 }
@@ -64,15 +37,42 @@ function updateIndeces(draggedTaskIndex, overTaskIndex) {
   const draggedIndexPosition = getPositionFromIndex(draggedTaskIndex);
   const overIndexPosition = getPositionFromIndex(overTaskIndex);
 
-  let tasks = loadTasks();
+  const tasks = loadTasks();
   tasks[draggedIndexPosition].index = overTaskIndex;
   tasks[overIndexPosition].index = draggedTaskIndex;
 
   saveTasks(reorderTasks(tasks));
 }
 
+function drop(e) {
+  e.preventDefault();
+
+  /* Get data */
+  draggedElement.innerHTML = this.innerHTML;
+  this.innerHTML = e.dataTransfer.getData('text/html');
+
+  const draggedElementId = draggedElement.id;
+  const overElementId = this.id;
+  const draggedTaskIndex = getIndexFromId(draggedElementId);
+  const overTaskIndex = getIndexFromId(overElementId);
+
+  const draggedDescriptionElement = getDescriptionElement(draggedTaskIndex);
+  const overDescriptionElement = getDescriptionElement(overTaskIndex);
+
+  draggedDescriptionElement.id = `todo-list-task-description-${overTaskIndex}`;
+  overDescriptionElement.id = `todo-list-task-description-${draggedTaskIndex}`;
+
+  const draggedCheckboxElement = document.getElementById(`check-task-${draggedTaskIndex}`);
+  const overCheckboxElement = document.getElementById(`check-task-${overTaskIndex}`);
+
+  updateCheckBoxElement(draggedCheckboxElement, overTaskIndex);
+  updateCheckBoxElement(overCheckboxElement, draggedTaskIndex);
+
+  updateIndeces(draggedTaskIndex, overTaskIndex);
+}
+
 export {
   dragStart,
   dragOver,
-  drop
-}
+  drop,
+};
