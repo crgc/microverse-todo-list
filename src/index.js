@@ -162,6 +162,28 @@ function setUpMainListeners() {
     localStorage.setItem('tasks', null);
     document.getElementById('todo-list').innerHTML = '';
   });
+
+  document.body.addEventListener('click', (e) => {
+    const tagName = e.target.tagName;
+    if(tagName == 'BODY' || tagName == "MAIN") {
+      console.log('Click on body');
+
+      const editableElements = document.getElementsByClassName('editable');
+      [...editableElements].forEach(editableElement => {
+        editableElement.classList.remove('editable');
+      });
+      
+      const deleteTaskElements = document.getElementsByClassName('fa-trash');
+      [...deleteTaskElements].forEach(deleteTaskElement => {
+        deleteTaskElement.classList.add('hidden');
+      });
+
+      const editTaskElements = document.getElementsByClassName('fa-ellipsis-v');
+      [...editTaskElements].forEach(editTaskElement => {
+        editTaskElement.classList.remove('hidden');
+      });
+    }
+  });
 }
 
 setUpMainListeners();
