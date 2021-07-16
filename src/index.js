@@ -11,13 +11,29 @@ const createElementWithClass = (name, clazz) => {
 };
 
 const createDivWithClass = (clazz) => createElementWithClass('div', clazz);
-const getLabelInnerHTML = (task, checkboxId) => {
-  let checkboxHTML = `<input type="checkbox" name="${checkboxId}" id="${checkboxId}">`;
+const createCheckMarkSpan = () => createElementWithClass('span', 'checkmark');
+const createCheckBoxElement = (task, checkboxId) => {
+  const checkboxElement = createElement('input');
+  checkboxElement.setAttribute('type', 'checkbox');
+  checkboxElement.setAttribute('name', `${checkboxId}`);
+  checkboxElement.id = `${checkboxId}`;
+  
   if (task.completed) {
-    checkboxHTML = `<input type="checkbox" name="${checkboxId}" id="${checkboxId}" checked="checked">`;
+    checkboxElement.setAttribute('checked', 'checked');
   }
 
-  return `${checkboxHTML} <span class="checkmark"></span>`;
+  checkboxElement.addEventListener('change', (e) => {
+    const checkbox = e.target;
+    const taskIndex = checkbox.id.substring('check-task-'.length);
+    const descriptionElement = document.getElementById(`todo-list-task-description-${taskIndex}`);
+    
+    if(checkbox.checked) {
+      descriptionElement.classList.add('strikethrough');
+    } else {
+      descriptionElement.classList.remove('strikethrough');
+    }
+  });
+  return checkboxElement;
 };
 const createDescriptionDiv = (task) => {
   let descriptionDivClass = 'to-do-list-task--description';
@@ -26,6 +42,7 @@ const createDescriptionDiv = (task) => {
   }
 
   const descriptionDiv = createDivWithClass(descriptionDivClass);
+  descriptionDiv.id = `todo-list-task-description-${task.index}`;
   descriptionDiv.textContent = task.description;
 
   return descriptionDiv;
@@ -39,7 +56,8 @@ function buildTaskLeftElement(task) {
 
   const labelElement = createElementWithClass('label', 'container');
   labelElement.setAttribute('for', checkboxId);
-  labelElement.innerHTML = getLabelInnerHTML(task, checkboxId);
+  labelElement.appendChild(createCheckBoxElement(task, checkboxId));
+  labelElement.appendChild(createCheckMarkSpan());
 
   /* Build description div */
   const descriptionDiv = createDescriptionDiv(task);
@@ -66,7 +84,7 @@ function buildTaskElement(task) {
   taskElement.addEventListener('dragstart', dragStart, false);
   taskElement.addEventListener('dragover', dragOver, false);
   taskElement.addEventListener('drop', drop, false);
-  
+
   return taskElement;
 }
 
@@ -80,7 +98,15 @@ function updateDOM(todoListElement) {
 }
 
 function loadTasks() {
-  let tasks = [
+  return JSON.parse(localStorage.getItem('tasks'));
+}
+
+function saveTasks(tasks) {
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+function displayTasks() {
+  let tasks  = [
     { description: 'Prepare meal', completed: true, index: 3 },
     { description: 'Do the laundry', completed: false, index: 1 },
     { description: 'Work on Microverse project', completed: false, index: 2 },
@@ -95,7 +121,8 @@ function loadTasks() {
     todoListElement.appendChild(taskElement);
   });
 
+  saveTasks(tasks);
   updateDOM(todoListElement);
 }
 
-loadTasks();
+displayTasks();

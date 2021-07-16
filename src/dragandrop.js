@@ -21,7 +21,7 @@ function drop(e)
    e.preventDefault();
 
    console.log(this.innerHTML);
-   
+
    /* Get data */
    dragElem.innerHTML = this.innerHTML;
    this.innerHTML = e.dataTransfer.getData('text/html');
