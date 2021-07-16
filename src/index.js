@@ -1,3 +1,4 @@
+import _ from 'lodash'; /* eslint-disable-line */
 import './style.css';
 import { dragStart, dragOver, drop } from './dragandrop.js';
 import { loadTasks, saveTasks, reorderTasks } from './task.js';
@@ -75,6 +76,23 @@ function buildTaskRightElement(task) {
     taskElement.classList.add('editable');
     targetElement.classList.add('hidden');
     deleteElement.classList.remove('hidden');
+
+    let editableTask = loadTasks().filter((task) => task.index == taskIndex)[0];
+
+    console.log(editableTask);
+
+    const taskDescriptionInputElement = createElement('input');
+    taskDescriptionInputElement.setAttribute('type', 'text');
+    taskDescriptionInputElement.setAttribute('class', 'editable');
+    taskDescriptionInputElement.setAttribute('value', editableTask.description);
+    taskDescriptionInputElement.id = `task-description-${taskIndex}`;
+
+    const taskDescriptionElement = document.getElementById(`todo-list-task-description-${taskIndex}`);
+    const taskLeftElement = taskDescriptionElement.parentElement;
+
+    /* Remove description and add new input */
+    taskLeftElement.removeChild(taskDescriptionElement);
+    taskLeftElement.appendChild(taskDescriptionInputElement);
   });
 
   const deleteElement = createElementWithClass('i', 'fa fa-trash hidden');
