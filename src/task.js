@@ -1,7 +1,19 @@
-export default class Task {
-  constructor(index, description, completed) {
-    this.index = index;
-    this.description = description;
-    this.completed = completed;
-  }
+import _ from 'lodash';
+
+function loadTasks() {
+  return JSON.parse(localStorage.getItem('tasks'));
+}
+
+function saveTasks(tasks) {
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+function reorderTasks(tasks) {
+  return _.orderBy(tasks, ['index'], ['asc']);
+}
+
+export {
+  loadTasks,
+  saveTasks,
+  reorderTasks
 }

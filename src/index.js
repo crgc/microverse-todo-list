@@ -1,14 +1,6 @@
-import _ from 'lodash'; /* eslint-disable-line */
 import './style.css';
 import { dragStart, dragOver, drop } from './dragandrop';
-
-function loadTasks() {
-  return JSON.parse(localStorage.getItem('tasks'));
-}
-
-function saveTasks(tasks) {
-  localStorage.setItem('tasks', JSON.stringify(tasks));
-}
+import { loadTasks, saveTasks, reorderTasks } from './task';
 
 const createElement = (name) => document.createElement(name);
 const createElementWithClass = (name, clazz) => {
@@ -121,7 +113,7 @@ function displayTasks() {
     { description: 'Work on Microverse project', completed: false, index: 2 },
   ];
 
-  tasks = _.orderBy(tasks, ['index'], ['asc']);
+  tasks = reorderTasks(tasks, ['index'], ['asc']);
 
   const todoListElement = document.getElementById('todo-list');
   tasks.forEach((task) => {
