@@ -19,4 +19,4 @@ export default function taskCompleteOrPending(e) {
   }
 
   saveTasks(tasks);
-};
+}
