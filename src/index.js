@@ -3,7 +3,7 @@ import './style.css';
 import { dragStart, dragOver, drop } from './dragandrop.js';
 import { loadTasks, saveTasks, reorderTasks } from './task.js';
 import taskCompleteOrPending from './checkbox.js';
-import { addNewTask } from './crud.js';
+import addNewTask from './crud.js';
 
 const createElement = (name) => document.createElement(name);
 const createElementWithClass = (name, clazz) => {
@@ -67,7 +67,7 @@ function buildTaskRightElement(task) {
   editElement.setAttribute('aria-hidden', 'true');
   editElement.addEventListener('click', (e) => {
     const targetElement = e.target;
-    const parentElement = targetElement.parentElement;
+    const { parentElement } = targetElement;
     const taskElement = parentElement.parentElement;
 
     const taskIndex = targetElement.id.substring('edit-task-'.length);
@@ -77,9 +77,8 @@ function buildTaskRightElement(task) {
     targetElement.classList.add('hidden');
     deleteElement.classList.remove('hidden');
 
-    let editableTask = loadTasks().filter((task) => task.index == taskIndex)[0];
-
-    console.log(editableTask);
+    const tasks = loadTasks();
+    const editableTask = tasks.filter((task) => task.index == taskIndex )[0]; /* eslint-disable-line  */
 
     const taskDescriptionInputElement = createElement('input');
     taskDescriptionInputElement.setAttribute('type', 'text');
@@ -102,20 +101,20 @@ function buildTaskRightElement(task) {
     const taskIndex = e.target.id.substring('delete-task-'.length);
 
     let tasks = loadTasks();
-    tasks = tasks.filter((task) => task.index != taskIndex);
-    
+    tasks = tasks.filter((task) => task.index != taskIndex); /* eslint-disable-line eqeqeq */
+
     let shiftedTasks = [];
-    for(let i = 0; i< tasks.length; i++) {
+    for (let i = 0; i < tasks.length; i++) { /* eslint-disable-line no-plusplus */
       const task = tasks[i];
       shiftedTasks = shiftedTasks.concat({
         description: task.description,
         completed: task.completed,
-        index: i +1
+        index: i + 1,
       });
     }
 
     saveTasks(shiftedTasks);
-    displayTasks();
+    displayTasks(); /* eslint-disable-line */
   });
 
   taskRightElement.appendChild(editElement);
@@ -182,22 +181,20 @@ function setUpMainListeners() {
   });
 
   document.body.addEventListener('click', (e) => {
-    const tagName = e.target.tagName;
-    if(tagName == 'BODY' || tagName == "MAIN") {
-      console.log('Click on body');
-
+    const { tagName } = e.target;
+    if (tagName == 'BODY' || tagName == 'MAIN') { /* eslint-disable-line eqeqeq */
       const editableElements = document.getElementsByClassName('editable');
-      [...editableElements].forEach(editableElement => {
+      [...editableElements].forEach((editableElement) => {
         editableElement.classList.remove('editable');
       });
-      
+
       const deleteTaskElements = document.getElementsByClassName('fa-trash');
-      [...deleteTaskElements].forEach(deleteTaskElement => {
+      [...deleteTaskElements].forEach((deleteTaskElement) => {
         deleteTaskElement.classList.add('hidden');
       });
 
       const editTaskElements = document.getElementsByClassName('fa-ellipsis-v');
-      [...editTaskElements].forEach(editTaskElement => {
+      [...editTaskElements].forEach((editTaskElement) => {
         editTaskElement.classList.remove('hidden');
       });
     }
