@@ -85,8 +85,18 @@ function buildTaskRightElement(task) {
 
     let tasks = loadTasks();
     tasks = tasks.filter((task) => task.index != taskIndex);
+    
+    let shiftedTasks = [];
+    for(let i = 0; i< tasks.length; i++) {
+      const task = tasks[i];
+      shiftedTasks = shiftedTasks.concat({
+        description: task.description,
+        completed: task.completed,
+        index: i +1
+      });
+    }
 
-    saveTasks(tasks);
+    saveTasks(shiftedTasks);
     displayTasks();
   });
 
