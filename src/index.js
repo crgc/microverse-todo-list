@@ -117,6 +117,12 @@ function setUpMainListeners() {
   addNewTaskElement.addEventListener('click', () => {
     addNewTask(displayTasks);
   });
+
+  const clearAllElement = document.getElementById('todo-list-clear-all');
+  clearAllElement.addEventListener('click', () => {
+    localStorage.setItem('tasks', null);
+    document.getElementById('todo-list').innerHTML = '';
+  });
 }
 
 setUpMainListeners();
