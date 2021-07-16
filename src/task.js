@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _ from 'lodash'; /* eslint-disable-line */
 
 function loadTasks() {
   return JSON.parse(localStorage.getItem('tasks'));
