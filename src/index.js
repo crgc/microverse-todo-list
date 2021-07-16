@@ -1,5 +1,6 @@
 import _ from 'lodash'; /* eslint-disable-line */
 import './style.css';
+import { dragStart, dragOver, drop } from './dragandrop';
 
 const createElement = (name) => document.createElement(name);
 const createElementWithClass = (name, clazz) => {
@@ -57,9 +58,15 @@ function buildTaskRightElement() {
 
 function buildTaskElement(task) {
   const taskElement = createDivWithClass('todo-list-task draggable');
+  taskElement.setAttribute('id', `todo-list-task-${task.index}`);
+  taskElement.setAttribute('draggable', 'true');
   taskElement.appendChild(buildTaskLeftElement(task));
   taskElement.appendChild(buildTaskRightElement());
 
+  taskElement.addEventListener('dragstart', dragStart, false);
+  taskElement.addEventListener('dragover', dragOver, false);
+  taskElement.addEventListener('drop', drop, false);
+  
   return taskElement;
 }
 
