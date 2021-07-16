@@ -56,7 +56,7 @@ function buildTaskRightElement() {
 }
 
 function buildTaskElement(task) {
-  const taskElement = createDivWithClass('todo-list-task');
+  const taskElement = createDivWithClass('todo-list-task draggable');
   taskElement.appendChild(buildTaskLeftElement(task));
   taskElement.appendChild(buildTaskRightElement());
 
