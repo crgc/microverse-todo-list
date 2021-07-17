@@ -14,12 +14,12 @@ main,
 .todo-list-add,
 .todo-list-task,
 .todo-list-task-left,
-.todo-list-clear-all {
+#todo-list-clear-all {
   display: flex;
 }
 
 main,
-.todo-list-clear-all {
+#todo-list-clear-all {
   align-items: center;
   justify-content: center;
 }
@@ -34,10 +34,14 @@ i {
   color: #9b9b9b;
 }
 
+i:hover {
+  color: #636e72;
+}
+
 i:hover,
 .container,
 .container input,
-.todo-list-clear-all div:hover {
+#todo-list-clear-all div:hover {
   cursor: pointer;
 }
 
@@ -55,7 +59,7 @@ i:hover,
 .todo-list-header,
 .todo-list-add,
 .todo-list-task,
-.todo-list-clear-all {
+#todo-list-clear-all {
   padding: 1rem;
 }
 
@@ -74,14 +78,20 @@ i:hover,
   justify-content: flex-start;
 }
 
-.todo-list-add input {
-  padding: 0;
-  font-size: 15px;
+.todo-list-task-left,
+input[type=text] {
   width: 100%;
+}
+
+input[type=text] {
+  padding: 0;
+  font-size: 16px;
+  outline: none;
   border-top-style: hidden;
   border-right-style: hidden;
   border-left-style: hidden;
   border-bottom-style: hidden;
+  background-color: inherit;
 }
 
 .checkmark {
@@ -135,15 +145,11 @@ i:hover,
   width: 0;
 }
 
-.todo-list-add input:focus {
-  outline: none;
-}
-
 .container input:checked ~ .checkmark {
   border: 0;
 }
 
-.todo-list-clear-all {
+#todo-list-clear-all {
   background-color: #f6f6f6;
   color: #898989;
 }
@@ -151,4 +157,12 @@ i:hover,
 .draggable {
   cursor: move;
   user-select: none;
+}
+
+.editable {
+  background-color: #fffcca;
+}
+
+.hidden {
+  display: none;
 }
