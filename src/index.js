@@ -78,7 +78,7 @@ function buildTaskRightElement(task) {
     deleteElement.classList.remove('hidden');
 
     const tasks = loadTasks();
-    const editableTask = tasks.filter((task) => task.index == taskIndex )[0]; /* eslint-disable-line  */
+    const editableTask = tasks.filter((task) => task.index === parseInt(taskIndex, 10))[0];
 
     const taskDescriptionInputElement = createElement('input');
     taskDescriptionInputElement.setAttribute('type', 'text');
@@ -101,10 +101,10 @@ function buildTaskRightElement(task) {
     const taskIndex = e.target.id.substring('delete-task-'.length);
 
     let tasks = loadTasks();
-    tasks = tasks.filter((task) => task.index != taskIndex); /* eslint-disable-line eqeqeq */
+    tasks = tasks.filter((task) => task.index !== parseInt(taskIndex, 10));
 
     let shiftedTasks = [];
-    for (let i = 0; i < tasks.length; i++) { /* eslint-disable-line no-plusplus */
+    for (let i = 0; i < tasks.length; i += 1) {
       const task = tasks[i];
       shiftedTasks = shiftedTasks.concat({
         description: task.description,
@@ -178,7 +178,7 @@ function setUpMainListeners() {
 
   document.body.addEventListener('click', (e) => {
     const { tagName } = e.target;
-    if (tagName == 'BODY' || tagName == 'MAIN') { /* eslint-disable-line eqeqeq */
+    if (tagName === 'BODY' || tagName === 'MAIN') {
       const editableElements = document.getElementsByClassName('editable');
       [...editableElements].forEach((editableElement) => {
         editableElement.classList.remove('editable');
